@@ -1,5 +1,5 @@
 @php
-    use App\Models\Vacante;
+    use App\Http\Livewire\Vacante;
 @endphp
 <div class="p-10">
     <div class="mb-5 ">
@@ -52,9 +52,13 @@
     @endguest
     <!--Muestra la indormacion solo a un usuario -->
      
-    
+    @cannot('create', App\Models\Vacante::class)
+        
+    <livewire:postular-vacante :vacante="$vacante" />
+    @endcannot
      
- 
+    
+
 
          
          

@@ -17,10 +17,12 @@
     
     <div class="flex flex-col md:flex-row items-stretch gap-3 mt-5 md:mt-0">
 <!-- Botón Candidatos -->
+{{$vacante->candidatos->count()}}
 <livewire:boton-accion 
-href="#" 
+href="{{ route('candidatos.index', $vacante) }}" 
 color="bg-slate-800" 
 hoverColor="hover:bg-slate-700" 
+
 text="Candidatos" />
 
 <!-- Botón Editar -->

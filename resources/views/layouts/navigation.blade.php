@@ -12,6 +12,7 @@
 
                 <!-- Navigation Links -->
                 @auth
+                @can('create', App\Models\Vacante::class)
                  <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('vacantes.index')" :active="request()->routeIs('vacantes.index')">
                         {{ __('Dashboard') }}
@@ -21,6 +22,7 @@
                         {{ __('Crear Vacante') }}
                     </x-nav-link>
                 </div>
+                @endcan
                 @endauth
                 
                  
@@ -31,6 +33,16 @@
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ml-6">
                 @auth
+                @can('create', App\Models\Vacante::class)
+                <a href="{{route('notificaciones')}}"
+                 class="mr-2 w-7 h-7  bg-indigo-600 text-white hover:bg-indigo-800 rounded-full flex items-center justify-center text-sm font-extrabold" 
+                >
+                    {{ auth()->user()->unreadNotifications->count() }}
+                </a>
+                 
+                @endcan
+
+
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
@@ -96,6 +108,18 @@
             <x-responsive-nav-link :href="route('vacantes.index')" :active="request()->routeIs('vacantes.index')">
                 {{ __('Mis Vacantes') }}
             </x-responsive-nav-link>
+            @if (auth()->user()->rol === 2)
+            <div class="flex gao-2 items-center p-3">
+                <a href="{{route('notificaciones')}}"
+                 class=" w-7 h-7  bg-indigo-600 text-white hover:bg-indigo-800 rounded-full flex items-center justify-center text-sm font-extrabold" 
+                >
+                    {{ auth()->user()->unreadNotifications->count() }}
+                </a>
+                <p class="pl-2 text-base font-medium text-gray-600">
+                   @choice('Notificacion|Notificaciones', auth()->user()->unreadNotifications->count())
+                </p>
+            </div>
+                @endif
  
         </div>
         <div class="pt-2 pb-3 space-y-1">
